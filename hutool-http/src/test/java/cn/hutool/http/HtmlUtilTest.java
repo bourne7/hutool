@@ -1,7 +1,8 @@
 package cn.hutool.http;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Html单元测试
@@ -78,7 +79,7 @@ public class HtmlUtilTest {
 	}
 
 	@Test
-	public void cleanEmptyTag() {
+	public void cleanEmptyTagTest() {
 		String str = "<p></p><div></div>";
 		String result = HtmlUtil.cleanEmptyTag(str);
 		assertEquals("", result);
