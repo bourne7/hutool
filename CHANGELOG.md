@@ -2,11 +2,13 @@
 # 🚀Changelog
 
 -------------------------------------------------------------------------------------------------------------
-# 5.8.36(2025-01-10)
+# 5.8.36(2025-01-12)
 
 ### 🐣新特性
 * 【crypto 】      增加BCUtil.decodeECPrivateKey方法（issue#3829@Github）
 * 【core   】      增加HtmlUtil.cleanEmptyTag方法（pr#3838@Github）
+* 【db     】      GlobalDbSetting优化默认配置读取规则，优先读取文件而非jar中的文件（issue#900@Github）
+
 ### 🐞Bug修复
 * 【aop    】      修复ProxyUtil可能的空指针问题（issue#IBF20Z@Gitee）
 * 【core   】      修复XmlUtil转义调用方法错误问题，修复XmlEscape未转义单引号问题（pr#3837@Github）
