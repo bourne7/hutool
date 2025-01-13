@@ -98,7 +98,7 @@ public class WordTree extends HashMap<Character, WordTree> {
 	 * @return this
 	 */
 	public WordTree addWord(String word) {
-		final Filter<Character> charFilter = this.charFilter;
+		final Filter<Character> localCharFilter = this.charFilter;
 		WordTree parent = null;
 		WordTree current = this;
 		WordTree child;
@@ -106,7 +106,7 @@ public class WordTree extends HashMap<Character, WordTree> {
 		final int length = word.length();
 		for (int i = 0; i < length; i++) {
 			currentChar = word.charAt(i);
-			if (charFilter.accept(currentChar)) {//只处理合法字符
+			if (localCharFilter.accept(currentChar)) {//只处理合法字符
 				child = current.get(currentChar);
 				if (child == null) {
 					//无子类，新建一个子节点后存放下一个字符
@@ -245,7 +245,7 @@ public class WordTree extends HashMap<Character, WordTree> {
 		List<FoundWord> foundWords = new ArrayList<>();
 		WordTree current = this;
 		final int length = text.length();
-		final Filter<Character> charFilter = this.charFilter;
+		final Filter<Character> localCharFilter = this.charFilter;
 		//存放查找到的字符缓存。完整出现一个词时加到findedWords中，否则清空
 		final StringBuilder wordBuffer = StrUtil.builder();
 		final StringBuilder keyBuffer = StrUtil.builder();
@@ -256,7 +256,7 @@ public class WordTree extends HashMap<Character, WordTree> {
 			for (int j = i; j < length; j++) {
 				currentChar = text.charAt(j);
 //				Console.log("i: {}, j: {}, currentChar: {}", i, j, currentChar);
-				if (false == charFilter.accept(currentChar)) {
+				if (false == localCharFilter.accept(currentChar)) {
 					if (wordBuffer.length() > 0) {
 						//做为关键词中间的停顿词被当作关键词的一部分被返回
 						wordBuffer.append(currentChar);
