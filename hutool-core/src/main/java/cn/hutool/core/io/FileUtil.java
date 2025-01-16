@@ -64,6 +64,10 @@ public class FileUtil extends PathUtil {
 	 */
 	private static final Pattern PATTERN_PATH_ABSOLUTE = Pattern.compile("^[a-zA-Z]:([/\\\\].*)?", Pattern.DOTALL);
 
+	/**
+	 * windows的共享文件夹开头
+	 */
+	private static final String SMB_PATH_PREFIX = "\\\\";
 
 	/**
 	 * 是否为Windows环境
@@ -1370,6 +1374,7 @@ public class FileUtil extends PathUtil {
 	 *     <li>以/开头的路径</li>
 	 *     <li>满足类似于 c:/xxxxx，其中祖母随意，不区分大小写</li>
 	 *     <li>满足类似于 d:\xxxxx，其中祖母随意，不区分大小写</li>
+	 *     <li>满足windows SMB协议格式，如: \\192.168.254.1\Share</li>
 	 * </ul>
 	 *
 	 * @param path 需要检查的Path
@@ -1381,7 +1386,7 @@ public class FileUtil extends PathUtil {
 		}
 
 		// 给定的路径已经是绝对路径了
-		return StrUtil.C_SLASH == path.charAt(0) || ReUtil.isMatch(PATTERN_PATH_ABSOLUTE, path);
+		return StrUtil.C_SLASH == path.charAt(0) || path.startsWith(SMB_PATH_PREFIX) || ReUtil.isMatch(PATTERN_PATH_ABSOLUTE, path);
 	}
 
 	/**
@@ -1667,7 +1672,7 @@ public class FileUtil extends PathUtil {
 		}
 
 		//兼容Windows下的共享目录路径（原始路径如果以\\开头，则保留这种路径）
-		if (path.startsWith("\\\\")) {
+		if (path.startsWith(SMB_PATH_PREFIX)) {
 			return path;
 		}
 
