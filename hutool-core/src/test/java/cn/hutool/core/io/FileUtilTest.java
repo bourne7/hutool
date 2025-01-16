@@ -53,6 +53,30 @@ public class FileUtilTest {
 
 		path = FileUtil.getAbsolutePath("d:");
 		assertEquals("d:", path);
+
+	}
+
+	@Test
+	@Disabled
+	public void smbPathTest() {
+		String smbPath = "\\\\192.168.254.88\\share\\rc-source";
+		String parseSmbPath = FileUtil.getAbsolutePath(smbPath);
+		assertEquals(smbPath, parseSmbPath);
+		String dir = smbPath + "\\test";
+
+		FileUtil.mkdir(dir);
+		assertTrue(FileUtil.exist(dir));
+		String file = dir + "\\a.txt";
+		FileUtil.touch(file);
+		FileUtil.writeString("Hello SMB", file, "UTF-8");
+
+		String read = FileUtil.readString(file, "UTF-8");
+		assertEquals(read, "Hello SMB");
+
+		assertEquals(1, FileUtil.loopFiles(dir).size());
+		assertEquals(1, FileUtil.ls(dir).length);
+
+		FileUtil.del(dir);
 	}
 
 	@Test
